@@ -1,6 +1,8 @@
 package ru.geekbrains.mythread.ui.main
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -55,6 +57,34 @@ class ThreadFragment : Fragment() {
                     })
                 }
             }.start()
+        }
+
+        val handlerThread = HandlerThread(getString(R.string.my_handler_thread))
+        handlerThread.start()
+        val handler = Handler(handlerThread.looper)
+        binding.calcThreadHandler.setOnClickListener {
+            counterThread++
+            val cntrThread = counterThread
+            binding.mainContainer.addView(AppCompatTextView(it.context).apply{
+                text = String.format(
+                    getString(R.string.calculate_in_handler_thread),
+                    handlerThread.name + " " + cntrThread
+                )
+                textSize = resources.getDimension(R.dimen.main_container_text_size)
+            })
+
+            handler.post{
+                startCalculation(binding.editText.text.toString().toInt())
+                binding.mainContainer.post{
+                    binding.mainContainer.addView(AppCompatTextView(it.context).apply {
+                        text = String.format(
+                            getString(R.string.return_from_handler_thread),
+                            Thread.currentThread().name + " " + cntrThread
+                        )
+                        textSize = resources.getDimension(R.dimen.main_container_text_size)
+                    })
+                }
+            }
         }
     }
 
