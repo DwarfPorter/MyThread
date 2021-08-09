@@ -59,6 +59,21 @@
             android:layout_marginTop="@dimen/margin_5_dp"
             android:text="@string/handler_thread"
             android:textSize="@dimen/feels_like_text_size" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/jobServiceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5_dp"
+            android:text="@string/job_service"
+            android:textSize="@dimen/feels_like_text_size" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/serviceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5_dp"
+            android:text="@string/service"
+            android:textSize="@dimen/feels_like_text_size" />
+
     </LinearLayout>
 </ScrollView>
 
