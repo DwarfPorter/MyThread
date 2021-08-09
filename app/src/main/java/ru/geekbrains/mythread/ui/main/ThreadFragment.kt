@@ -17,6 +17,8 @@ class ThreadFragment : Fragment() {
         fun newInstance() = ThreadFragment()
     }
 
+    private var counterThread = 0;
+
     private var _binding: ThreadFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -37,6 +39,22 @@ class ThreadFragment : Fragment() {
                 text = getString(R.string.in_main_thread)
                 textSize = resources.getDimension(R.dimen.main_container_text_size)
             })
+        }
+
+        binding.calcThreadBtn.setOnClickListener {
+            Thread {
+                counterThread++
+                val cntrThread = counterThread
+                val calculatedResult = startCalculation(binding.editText.text.toString().toInt())
+                activity?.runOnUiThread {
+                    binding.textView.text = calculatedResult
+
+                    binding.mainContainer.addView(AppCompatTextView(it.context).apply {
+                        text = String.format(getString(R.string.from_thread), cntrThread)
+                        textSize = resources.getDimension(R.dimen.main_container_text_size)
+                    })
+                }
+            }.start()
         }
     }
 
